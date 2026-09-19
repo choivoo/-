@@ -1,6 +1,6 @@
 (() => {
   const images = window.GAUNTLET_IMAGES || [];
-  const labels = ["정면","착용 각도","후면","스톤 클로즈업","아머 클로즈업"];
+  const labels = ["정면","후면"];
   const hero = document.getElementById("heroImage");
   const main = document.getElementById("galleryMain");
   const detail = document.getElementById("detailImage");
@@ -13,7 +13,7 @@
   if (images.length) {
     hero.src = images[0];
     main.src = images[0];
-    detail.src = images[3] || images[0];
+    detail.src = images[1] || images[0];
 
     images.forEach((src, i) => {
       const btn = document.createElement("button");
