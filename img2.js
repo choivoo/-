@@ -1,0 +1,1 @@
+window.GAUNTLET_IMAGES=window.GAUNTLET_IMAGES||[];if(window.GAUNTLET_IMAGES[0])window.GAUNTLET_IMAGES.push(window.GAUNTLET_IMAGES[0]);
