@@ -79,17 +79,29 @@ public class HomeActivity extends Activity {
 
     private void buildHome(boolean animated){
         root=new FrameLayout(this);
-        root.setBackground(new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{Color.rgb(11,19,38),Color.rgb(39,31,73),Color.rgb(10,14,24)}));
+        root.setBackground(new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{Color.rgb(7,15,31),Color.rgb(43,31,84),Color.rgb(14,24,46),Color.rgb(8,13,24)}));
         root.setOnTouchListener((v,e)->gesture(e));
         LinearLayout page=new LinearLayout(this);page.setOrientation(LinearLayout.VERTICAL);page.setPadding(DuoUi.dp(this,18),DuoUi.dp(this,20),DuoUi.dp(this,18),DuoUi.dp(this,10));root.addView(page,new FrameLayout.LayoutParams(-1,-1));
+
+        TextView island=DuoUi.label(this,"●  DUO 1.1  •  "+profileText(),10,Color.WHITE,true);
+        island.setGravity(Gravity.CENTER);island.setBackground(DuoUi.rounded(Color.argb(215,8,10,16),24,this));
+        LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(DuoUi.dp(this,200),DuoUi.dp(this,34));ip.gravity=Gravity.CENTER_HORIZONTAL;ip.bottomMargin=DuoUi.dp(this,6);page.addView(island,ip);
 
         LinearLayout top=new LinearLayout(this);top.setGravity(Gravity.CENTER_VERTICAL);
         clock=DuoUi.label(this,"",16,Color.WHITE,true);top.addView(clock,new LinearLayout.LayoutParams(0,DuoUi.dp(this,44),1f));
         TextView profile=DuoUi.label(this,profileText(),11,Color.rgb(205,216,245),true);profile.setGravity(Gravity.CENTER);profile.setPadding(DuoUi.dp(this,10),0,DuoUi.dp(this,10),0);profile.setBackground(DuoUi.rounded(Color.argb(70,255,255,255),18,this));profile.setOnClickListener(v->startActivity(new Intent(this,DiagnosticsActivity.class)));top.addView(profile,new LinearLayout.LayoutParams(-2,DuoUi.dp(this,32)));page.addView(top,new LinearLayout.LayoutParams(-1,DuoUi.dp(this,48)));
 
-        TextView date=DuoUi.label(this,new SimpleDateFormat("M월 d일 EEEE",Locale.KOREAN).format(new Date()),28,Color.WHITE,true);date.setPadding(0,DuoUi.dp(this,8),0,DuoUi.dp(this,10));page.addView(date);
+        TextView date=DuoUi.label(this,new SimpleDateFormat("M월 d일 EEEE",Locale.KOREAN).format(new Date()),28,Color.WHITE,true);date.setPadding(0,DuoUi.dp(this,8),0,DuoUi.dp(this,8));page.addView(date);
 
-        TextView search=DuoUi.label(this,"⌕  검색",15,Color.rgb(230,234,245),false);search.setGravity(Gravity.CENTER_VERTICAL);search.setPadding(DuoUi.dp(this,16),0,DuoUi.dp(this,16),0);search.setBackground(DuoUi.stroke(Color.argb(55,255,255,255),Color.argb(60,255,255,255),22,this));search.setOnClickListener(v->showSearch());DuoUi.clickScale(search);LinearLayout.LayoutParams sp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,44));sp.bottomMargin=DuoUi.dp(this,12);page.addView(search,sp);
+        LinearLayout glass=new LinearLayout(this);glass.setGravity(Gravity.CENTER);glass.setPadding(DuoUi.dp(this,8),DuoUi.dp(this,7),DuoUi.dp(this,8),DuoUi.dp(this,7));
+        glass.setBackground(DuoUi.stroke(Color.argb(44,255,255,255),Color.argb(62,255,255,255),24,this));
+        TextView lockCard=tile("LOCK",v->startActivity(new Intent(this,LockScreenActivity.class)));
+        TextView labCard=tile("DUO LAB 100",v->startActivity(new Intent(this,DuoLabActivity.class)));
+        TextView qeCard=tile("QE",v->startActivity(new Intent(this,DiagnosticsActivity.class)));
+        glass.addView(lockCard,weight());glass.addView(labCard,weight());glass.addView(qeCard,weight());
+        LinearLayout.LayoutParams gp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,56));gp.bottomMargin=DuoUi.dp(this,10);page.addView(glass,gp);
+
+        TextView search=DuoUi.label(this,"⌕  Spotlight 검색",15,Color.rgb(230,234,245),false);search.setGravity(Gravity.CENTER_VERTICAL);search.setPadding(DuoUi.dp(this,16),0,DuoUi.dp(this,16),0);search.setBackground(DuoUi.stroke(Color.argb(55,255,255,255),Color.argb(60,255,255,255),22,this));search.setOnClickListener(v->showSearch());DuoUi.clickScale(search);LinearLayout.LayoutParams sp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,44));sp.bottomMargin=DuoUi.dp(this,12);page.addView(search,sp);
 
         grid=new GridView(this);grid.setNumColumns(columns());grid.setVerticalSpacing(DuoUi.dp(this,8));grid.setHorizontalSpacing(DuoUi.dp(this,4));grid.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);grid.setSelector(android.R.color.transparent);grid.setAdapter(new AppAdapter(this,apps));grid.setOnItemClickListener((p,v,pos,id)->launch(apps.get(pos)));page.addView(grid,new LinearLayout.LayoutParams(-1,0,1f));
 
@@ -105,7 +117,7 @@ public class HomeActivity extends Activity {
     private String profileText(){int sw=getResources().getConfiguration().screenWidthDp;String m=sw>=720?"ULTRA/WIDE":sw>=600?"UNFOLDED":"COVER";return"DUO • "+m+" • "+columns()+"×";}
 
     private View buildDock(){
-        LinearLayout dock=new LinearLayout(this);dock.setGravity(Gravity.CENTER);dock.setPadding(DuoUi.dp(this,8),DuoUi.dp(this,8),DuoUi.dp(this,8),DuoUi.dp(this,8));dock.setBackground(DuoUi.stroke(Color.argb(80,255,255,255),Color.argb(60,255,255,255),28,this));
+        LinearLayout dock=new LinearLayout(this);dock.setGravity(Gravity.CENTER);dock.setPadding(DuoUi.dp(this,8),DuoUi.dp(this,8),DuoUi.dp(this,8),DuoUi.dp(this,8));dock.setBackground(DuoUi.stroke(Color.argb(72,236,242,255),Color.argb(92,255,255,255),30,this));
         List<AppEntry> chosen=chooseDock();for(AppEntry a:chosen){ImageView iv=new ImageView(this);iv.setImageDrawable(a.icon);iv.setPadding(DuoUi.dp(this,7),DuoUi.dp(this,7),DuoUi.dp(this,7),DuoUi.dp(this,7));iv.setBackground(DuoUi.rounded(Color.argb(35,255,255,255),18,this));iv.setOnClickListener(v->launch(a));DuoUi.clickScale(iv);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,DuoUi.dp(this,58),1f);p.leftMargin=DuoUi.dp(this,5);p.rightMargin=DuoUi.dp(this,5);dock.addView(iv,p);}
         return dock;
     }
@@ -151,7 +163,7 @@ public class HomeActivity extends Activity {
     }
 
     private void showControlCenter(){
-        Dialog d=new Dialog(this);d.requestWindowFeature(Window.FEATURE_NO_TITLE);LinearLayout box=panelBox();box.addView(DuoUi.label(this,"제어 센터",22,Color.WHITE,true));
+        Dialog d=new Dialog(this);d.requestWindowFeature(Window.FEATURE_NO_TITLE);LinearLayout box=panelBox();box.addView(DuoUi.label(this,"Duo Control Center",22,Color.WHITE,true));
         LinearLayout tiles=new LinearLayout(this);
         tiles.addView(tile("인터넷",v->{try{startActivity(new Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY));}catch(Exception e){startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));}}),weight());
         tiles.addView(tile("Bluetooth",v->startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS))),weight());
@@ -162,7 +174,12 @@ public class HomeActivity extends Activity {
 
         TextView vl=DuoUi.label(this,"볼륨",13,Color.rgb(182,193,215),true);box.addView(vl);AudioManager am=(AudioManager)getSystemService(AUDIO_SERVICE);SeekBar vol=new SeekBar(this);vol.setMax(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC));vol.setProgress(am.getStreamVolume(AudioManager.STREAM_MUSIC));vol.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar s,int p,boolean f){if(f)am.setStreamVolume(AudioManager.STREAM_MUSIC,p,0);}public void onStartTrackingTouch(SeekBar s){}public void onStopTrackingTouch(SeekBar s){}});box.addView(vol);
 
-        LinearLayout bottom=new LinearLayout(this);bottom.addView(tile("QE 1.0",v->startActivity(new Intent(this,DiagnosticsActivity.class))),weight());bottom.addView(tile("설정",v->startActivity(new Intent(this,SetupActivity.class))),weight());LinearLayout.LayoutParams bp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,64));bp.topMargin=DuoUi.dp(this,12);box.addView(bottom,bp);
+        LinearLayout bottom=new LinearLayout(this);
+        bottom.addView(tile("QE 1.0",v->startActivity(new Intent(this,DiagnosticsActivity.class))),weight());
+        bottom.addView(tile("잠금화면",v->startActivity(new Intent(this,LockScreenActivity.class))),weight());
+        bottom.addView(tile("Duo Lab",v->startActivity(new Intent(this,DuoLabActivity.class))),weight());
+        bottom.addView(tile("설정",v->startActivity(new Intent(this,SetupActivity.class))),weight());
+        LinearLayout.LayoutParams bp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,64));bp.topMargin=DuoUi.dp(this,12);box.addView(bottom,bp);
         d.setContentView(box);d.show();sizeDialog(d,.92f);
     }
 
@@ -181,7 +198,7 @@ public class HomeActivity extends Activity {
     final class AppAdapter extends BaseAdapter {
         final Context c; final List<AppEntry> data;AppAdapter(Context c,List<AppEntry>d){this.c=c;data=d;}
         public int getCount(){return data.size();}public Object getItem(int p){return data.get(p);}public long getItemId(int p){return p;}
-        public View getView(int p,View old,ViewGroup parent){LinearLayout box=new LinearLayout(c);box.setOrientation(LinearLayout.VERTICAL);box.setGravity(Gravity.CENTER_HORIZONTAL);box.setPadding(DuoUi.dp(c,3),DuoUi.dp(c,5),DuoUi.dp(c,3),DuoUi.dp(c,4));ImageView iv=new ImageView(c);iv.setImageDrawable(data.get(p).icon);iv.setPadding(DuoUi.dp(c,6),DuoUi.dp(c,6),DuoUi.dp(c,6),DuoUi.dp(c,6));iv.setBackground(DuoUi.rounded(Color.argb(30,255,255,255),18,c));box.addView(iv,new LinearLayout.LayoutParams(DuoUi.dp(c,58),DuoUi.dp(c,58)));TextView t=DuoUi.label(c,data.get(p).label,11,Color.WHITE,false);t.setGravity(Gravity.CENTER);t.setMaxLines(1);t.setEllipsize(android.text.TextUtils.TruncateAt.END);LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(-1,DuoUi.dp(c,24));tp.topMargin=DuoUi.dp(c,2);box.addView(t,tp);DuoUi.clickScale(box);return box;}
+        public View getView(int p,View old,ViewGroup parent){LinearLayout box=new LinearLayout(c);box.setOrientation(LinearLayout.VERTICAL);box.setGravity(Gravity.CENTER_HORIZONTAL);box.setPadding(DuoUi.dp(c,3),DuoUi.dp(c,5),DuoUi.dp(c,3),DuoUi.dp(c,4));ImageView iv=new ImageView(c);iv.setImageDrawable(data.get(p).icon);iv.setPadding(DuoUi.dp(c,6),DuoUi.dp(c,6),DuoUi.dp(c,6),DuoUi.dp(c,6));iv.setBackground(DuoUi.stroke(Color.argb(26,255,255,255),Color.argb(34,255,255,255),20,c));box.addView(iv,new LinearLayout.LayoutParams(DuoUi.dp(c,58),DuoUi.dp(c,58)));TextView t=DuoUi.label(c,data.get(p).label,11,Color.WHITE,false);t.setGravity(Gravity.CENTER);t.setMaxLines(1);t.setEllipsize(android.text.TextUtils.TruncateAt.END);LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(-1,DuoUi.dp(c,24));tp.topMargin=DuoUi.dp(c,2);box.addView(t,tp);DuoUi.clickScale(box);return box;}
     }
 
     final class AppListAdapter extends BaseAdapter {
