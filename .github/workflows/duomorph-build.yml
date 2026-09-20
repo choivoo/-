@@ -1,3 +1,4 @@
+# build trigger: 1
 name: DuoMorph APK Build
 
 on:
