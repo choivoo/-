@@ -22,12 +22,14 @@ public class SetupActivity extends Activity {
     private void build(){
         ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);
         LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setPadding(DuoUi.dp(this,24),DuoUi.dp(this,48),DuoUi.dp(this,24),DuoUi.dp(this,32));root.setBackgroundColor(Color.rgb(12,16,25));scroll.addView(root,new ViewGroup.LayoutParams(-1,-2));
-        root.addView(DuoUi.label(this,"DUO ENGINE • 1.0.0",12,Color.rgb(155,178,255),true));
-        TextView title=DuoUi.label(this,"iPhone Duo 1.0",34,Color.WHITE,true);LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(-1,-2);tp.topMargin=DuoUi.dp(this,8);root.addView(title,tp);
-        TextView sub=DuoUi.label(this,"Galaxy Z Fold용 런처 · 전역 제스처 · 알림 허브 · Fold 전환 · QE 진단을 한 번에 설정합니다.",16,Color.rgb(202,210,226),false);sub.setPadding(0,DuoUi.dp(this,8),0,DuoUi.dp(this,22));root.addView(sub);
+        root.addView(DuoUi.label(this,"DUO ENGINE • 1.1.0",12,Color.rgb(155,178,255),true));
+        TextView title=DuoUi.label(this,"iPhone Duo 1.1",34,Color.WHITE,true);LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(-1,-2);tp.topMargin=DuoUi.dp(this,8);root.addView(title,tp);
+        TextView sub=DuoUi.label(this,"Galaxy Z Fold용 Duo Glass UI · 전역 제스처 · 잠금화면 프리뷰 · 알림 허브 · Fold 전환 · QE · Duo Lab 100을 한 번에 설정합니다.",16,Color.rgb(202,210,226),false);sub.setPadding(0,DuoUi.dp(this,8),0,DuoUi.dp(this,22));root.addView(sub);
         steps=new LinearLayout(this);steps.setOrientation(LinearLayout.VERTICAL);root.addView(steps,new LinearLayout.LayoutParams(-1,-2));rebuildSteps();
         TextView start=actionButton("Duo 홈 미리보기 시작","현재 설정 상태와 관계없이 Duo Home을 엽니다.");start.setOnClickListener(v->startActivity(new Intent(this,HomeActivity.class)));LinearLayout.LayoutParams sp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,64));sp.topMargin=DuoUi.dp(this,18);root.addView(start,sp);
         TextView diag=actionButton("QE 1.0 진단 열기","FPS · 화면 프로필 · 권한 · 메모리 · 전환 엔진 상태");diag.setOnClickListener(v->startActivity(new Intent(this,DiagnosticsActivity.class)));LinearLayout.LayoutParams dp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,64));dp.topMargin=DuoUi.dp(this,10);root.addView(diag,dp);
+        TextView lock=actionButton("Duo 잠금화면 프리뷰","대형 시계 · 알림 · 스와이프 해제 · 퀵 액션");lock.setOnClickListener(v->startActivity(new Intent(this,LockScreenActivity.class)));LinearLayout.LayoutParams lp2=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,64));lp2.topMargin=DuoUi.dp(this,10);root.addView(lock,lp2);
+        TextView lab=actionButton("Duo Lab 100","1.1 구현 기능과 2.0 확장 로드맵 100개");lab.setOnClickListener(v->startActivity(new Intent(this,DuoLabActivity.class)));LinearLayout.LayoutParams labp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,64));labp.topMargin=DuoUi.dp(this,10);root.addView(lab,labp);
         TextView note=DuoUi.label(this,"보안 경계: 일반 APK는 Samsung의 실제 보안 잠금화면이나 Android 시스템 UI 자체를 교체하지 않습니다. 대신 기본 홈 런처와 선택형 접근성 제스처 레이어로 동일한 사용 흐름을 구성합니다.",12,Color.rgb(139,151,173),false);note.setPadding(0,DuoUi.dp(this,22),0,0);root.addView(note);
         setContentView(scroll);
     }
