@@ -1,10 +1,16 @@
-# build trigger: 1
+# build trigger: 2
 name: DuoMorph APK Build
 
 on:
   push:
     branches:
       - duomorph-build-temp
+    paths:
+      - 'duomorph-build/**'
+      - '.github/workflows/duomorph-build.yml'
+  pull_request:
+    branches:
+      - main
     paths:
       - 'duomorph-build/**'
       - '.github/workflows/duomorph-build.yml'
