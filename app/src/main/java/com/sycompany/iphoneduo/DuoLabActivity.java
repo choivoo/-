@@ -22,11 +22,11 @@ public class DuoLabActivity extends Activity {
         "Alphabetic app sorting",
         "Direct app launching",
         "Spotlight-style app search",
-        "Bottom swipe search gesture",
+        "Native bottom system gesture reserved",
         "Top-left notification gesture",
         "Top-right Control Center gesture",
-        "Global Home gesture overlay",
-        "Global Recents gesture overlay",
+        "Galaxy system Home gesture integration",
+        "Galaxy system Recents gesture integration",
         "Notification listener hub",
         "Notification center cards",
         "Brightness control",
@@ -42,7 +42,7 @@ public class DuoLabActivity extends Activity {
         "DuoMorph calibration",
         "Setup Wizard",
         "Home-role setup",
-        "Accessibility setup shortcut",
+        "Galaxy navigation settings shortcut",
         "Notification-access setup shortcut",
         "Write-settings setup shortcut",
         "Camera permission setup",
@@ -56,8 +56,8 @@ public class DuoLabActivity extends Activity {
         "Duo Lab 100 dashboard",
         "Versioned update install path",
         "Same applicationId update support",
-        "Immersive status/navigation hide",
-        "Transient system-bar reveal",
+        "Status-bar immersive mode",
+        "Native navigation bar preserved",
         "Real app icon rendering",
         "Rounded icon containers",
         "Touch press-scale feedback",
@@ -112,7 +112,17 @@ public class DuoLabActivity extends Activity {
         "QE crash log viewer",
         "QE safe mode"
     };
-    private static final int LIVE_COUNT=50;
+    private static final int LIVE_COUNT=72;
+    private static boolean isLive(int id){
+        if(id>=1&&id<=62)return true;
+        switch(id){
+            case 67: case 72:
+            case 75: case 76: case 77: case 78: case 79: case 80:
+            case 83: case 91:
+                return true;
+            default:return false;
+        }
+    }
 
     @Override protected void onCreate(Bundle b){
         super.onCreate(b);getWindow().setStatusBarColor(Color.rgb(10,14,24));build();
@@ -123,20 +133,20 @@ public class DuoLabActivity extends Activity {
         scroll.addView(root,new ViewGroup.LayoutParams(-1,-2));
 
         root.addView(DuoUi.label(this,"DUO LAB • 100 FEATURE SPEC",11,Color.rgb(155,181,255),true));
-        TextView title=DuoUi.label(this,"iPhone Duo 1.1 → 2.0",30,Color.WHITE,true);title.setPadding(0,DuoUi.dp(this,6),0,DuoUi.dp(this,6));root.addView(title);
-        TextView sub=DuoUi.label(this,"1.1은 기반 엔진과 핵심 UX 50개를 실사용 가능한 상태로 묶고, 나머지 50개는 2.0 확장을 위한 내장 로드맵으로 관리합니다.",14,Color.rgb(192,204,228),false);sub.setPadding(0,0,0,DuoUi.dp(this,16));root.addView(sub);
+        TextView title=DuoUi.label(this,"iPhone Duo 1.2",30,Color.WHITE,true);title.setPadding(0,DuoUi.dp(this,6),0,DuoUi.dp(this,6));root.addView(title);
+        TextView sub=DuoUi.label(this,"1.2는 실제 Galaxy 시스템 제스처와 홈 편집 엔진을 포함해 72개 기능을 LIVE로 검증하며, 권한·플랫폼 제약이 큰 항목은 ROADMAP으로 명확히 구분합니다.",14,Color.rgb(192,204,228),false);sub.setPadding(0,0,0,DuoUi.dp(this,16));root.addView(sub);
 
         LinearLayout progress=new LinearLayout(this);progress.setGravity(Gravity.CENTER);progress.setBackground(DuoUi.stroke(Color.rgb(25,32,47),Color.rgb(55,68,92),24,this));
         TextView p=DuoUi.label(this,LIVE_COUNT+" / 100\nLIVE / FOUNDATION",20,Color.WHITE,true);p.setGravity(Gravity.CENTER);progress.addView(p,new LinearLayout.LayoutParams(-1,DuoUi.dp(this,86)));root.addView(progress);
 
         for(int i=0;i<FEATURES.length;i++){
-            boolean live=i<LIVE_COUNT;
+            boolean live=isLive(i+1);
             LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);row.setPadding(DuoUi.dp(this,12),DuoUi.dp(this,9),DuoUi.dp(this,12),DuoUi.dp(this,9));
             row.setBackground(DuoUi.rounded(live?Color.rgb(25,36,55):Color.rgb(20,25,36),18,this));
             TextView n=DuoUi.label(this,String.format("%02d",i+1),12,live?Color.rgb(139,226,183):Color.rgb(132,145,169),true);n.setGravity(Gravity.CENTER);
             row.addView(n,new LinearLayout.LayoutParams(DuoUi.dp(this,38),DuoUi.dp(this,40)));
             TextView name=DuoUi.label(this,FEATURES[i],14,Color.WHITE,true);LinearLayout.LayoutParams np=new LinearLayout.LayoutParams(0,DuoUi.dp(this,40),1f);np.leftMargin=DuoUi.dp(this,8);row.addView(name,np);
-            TextView state=DuoUi.label(this,live?"LIVE":"2.0",11,live?Color.rgb(126,235,177):Color.rgb(166,179,208),true);state.setGravity(Gravity.CENTER);
+            TextView state=DuoUi.label(this,live?"LIVE":"ROADMAP",11,live?Color.rgb(126,235,177):Color.rgb(166,179,208),true);state.setGravity(Gravity.CENTER);
             state.setBackground(DuoUi.rounded(live?Color.rgb(28,75,59):Color.rgb(44,50,68),14,this));row.addView(state,new LinearLayout.LayoutParams(DuoUi.dp(this,54),DuoUi.dp(this,28)));
             LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,DuoUi.dp(this,58));rp.topMargin=DuoUi.dp(this,7);root.addView(row,rp);
         }
