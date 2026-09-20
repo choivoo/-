@@ -1,7 +1,7 @@
-name: Build iPhone Duo 1.1 APK
+name: Build iPhone Duo 1.2 APK
 on:
   push:
-    branches: [ "iphone-duo-1.1-build" ]
+    branches: [ "iphone-duo-1.2-build" ]
   workflow_dispatch:
 
 jobs:
@@ -32,15 +32,15 @@ jobs:
 
       - name: Prepare artifact
         run: |
-          cp app/build/outputs/apk/release/app-release.apk iPhone-Duo-1.1-release.apk
-          sha256sum iPhone-Duo-1.1-release.apk > iPhone-Duo-1.1-release.sha256
+          cp app/build/outputs/apk/release/app-release.apk iPhone-Duo-1.2-release.apk
+          sha256sum iPhone-Duo-1.2-release.apk > iPhone-Duo-1.2-release.sha256
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: iPhone-Duo-1.1-APK
+          name: iPhone-Duo-1.2-APK
           path: |
-            iPhone-Duo-1.1-release.apk
-            iPhone-Duo-1.1-release.sha256
+            iPhone-Duo-1.2-release.apk
+            iPhone-Duo-1.2-release.sha256
           if-no-files-found: error
           retention-days: 7
