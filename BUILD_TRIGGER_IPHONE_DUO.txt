@@ -1,0 +1,1 @@
+Trigger build for iPhone Duo 1.0 after Android SDK workflow fix.
