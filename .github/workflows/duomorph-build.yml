@@ -1,0 +1,52 @@
+name: DuoMorph APK Build
+
+on:
+  push:
+    branches:
+      - duomorph-build-temp
+    paths:
+      - 'duomorph-build/**'
+      - '.github/workflows/duomorph-build.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 35
+        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Set up Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build debug APK
+        working-directory: duomorph-build
+        run: gradle --no-daemon :app:assembleDebug
+
+      - name: Prepare APK
+        run: |
+          cp duomorph-build/app/build/outputs/apk/debug/app-debug.apk DuoMorphHome-1.0.apk
+          sha256sum DuoMorphHome-1.0.apk > DuoMorphHome-1.0.sha256.txt
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DuoMorphHome-1.0
+          path: |
+            DuoMorphHome-1.0.apk
+            DuoMorphHome-1.0.sha256.txt
+          if-no-files-found: error
