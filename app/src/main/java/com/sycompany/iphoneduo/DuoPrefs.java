@@ -32,6 +32,10 @@ public final class DuoPrefs {
     public static void setFolder(Context c,List<String> v){p(c).edit().putString("folder_apps",encode(v)).apply();}
     public static List<String> order(Context c){return decode(p(c).getString("app_order",""));}
     public static void setOrder(Context c,List<String> v){p(c).edit().putString("app_order",encode(v)).apply();}
+    public static List<String> dock(Context c){return decode(p(c).getString("dock_apps",""));}
+    public static void setDock(Context c,List<String> v){p(c).edit().putString("dock_apps",encode(v)).apply();}
+    public static List<String> rawIcons(Context c){return decode(p(c).getString("raw_icons",""));}
+    public static void setRawIcons(Context c,List<String> v){p(c).edit().putString("raw_icons",encode(v)).apply();}
     public static List<String> hidden(Context c){return decode(p(c).getString("hidden_apps",""));}
     public static void setHidden(Context c,List<String> v){p(c).edit().putString("hidden_apps",encode(v)).apply();}
     private static String encode(List<String> l){StringBuilder b=new StringBuilder();for(String s:l){if(s==null)continue;if(b.length()>0)b.append("\n");b.append(s.replace("\n",""));}return b.toString();}
