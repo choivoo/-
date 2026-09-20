@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">iPhone Duo</string>
+    <string name="accessibility_desc">Duo 전역 홈 제스처 바를 표시하고 홈/최근 앱 동작을 수행합니다.</string>
+</resources>
