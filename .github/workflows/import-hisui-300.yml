@@ -1,0 +1,47 @@
+name: Import Hisui Arceus 300-slide expanded presentation
+
+on:
+  push:
+    branches:
+      - 'claude/escape-room-ppt-improve-c8enus'
+    paths:
+      - '.github/workflows/import-hisui-300.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  import-pptx:
+    if: github.repository == 'choivoo/-'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+      - name: Download and verify 300-slide deck
+        env:
+          PPTX_URL: 'https://d2ol7oe51mr4n9.cloudfront.net/user_33oAHDlK5abT27mI3gl8nFx8kg3/9a022b5c-d0dd-4022-bc44-961c9a7ebed4.pptx'
+        run: |
+          set -euo pipefail
+          target='레전드_아르세우스_히스이_대모험_스토리통합_300장_완성본.pptx'
+          curl --fail --location --retry 3 --silent --show-error --output "$target" "$PPTX_URL"
+          printf '%s  %s\n' 'c3a89a3027d9e3e215e9bb10785a874a6dd6fe6762226c1f53f314191b73b76c' "$target" | sha256sum --check
+          python3 - "$target" <<'PY'
+          import zipfile, re, sys
+          p=sys.argv[1]
+          with zipfile.ZipFile(p) as z:
+              assert z.testzip() is None, "Corrupt file"
+              names=z.namelist()
+              c=sum(bool(re.fullmatch(r'ppt/slides/slide\d+\.xml',n)) for n in names)
+              assert c==300, f"Expected 300 slides, received {c}"
+              assert '[Content_Types].xml' in names
+              print('Verified', c, 'slides')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$target"
+          if git diff --cached --quiet; then
+            echo "Already up to date"
+          else
+            git commit -m 'Add 300-slide Hisui Legends Arceus integrated presentation'
+            git push origin "HEAD:${GITHUB_REF#refs/heads/}"
+          fi
